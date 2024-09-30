@@ -11,9 +11,8 @@ class Kuchen(models.Model):
     
     active=True
 
+    # Fields
     name = fields.Char(required=True, default="unknown")
-    state = "New"
-
     expected_price = fields.Float(required=True)
     selling_price = fields.Float(readonly=True, copy=False)
     availability_date = fields.Date(copy=False, default=lambda self: self._default_date_availability())
@@ -21,6 +20,23 @@ class Kuchen(models.Model):
     description = fields.Text()
     postcode = fields.Char()
     bedrooms = fields.Integer(default=2)
+    living_area = fields.Float()
+    
     garden_orientation = fields.Selection(
         string='Type',
         selection=[('north', 'North'), ('east', 'East'), ('south', 'South'), ('west', 'West')])
+    
+    state = fields.Selection(
+        selection=[
+            ("new", "New"),
+            ("offer_received", "Offer Received"),
+            ("offer_accepted", "Offer Accepted"),
+            ("sold", "Sold"),
+            ("canceled", "Canceled"),
+        ],
+        string="Status",
+        required=True,
+        copy=False,
+        default="new",
+    )
+    active = fields.Boolean("Active", default=True)

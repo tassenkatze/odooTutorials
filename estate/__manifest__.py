@@ -12,6 +12,7 @@
     "installable": True,
     "auto_install": True,
     "data": [
+        'views/menus.xml',
         'views/estate_property_views.xml',
     ],
     'application' : True,
