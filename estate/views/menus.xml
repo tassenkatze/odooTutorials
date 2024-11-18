@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="test_menu_root" name="Kuchen">
-        <menuitem id="test_first_level_menu" name="Lists">
-            <menuitem id="estate_model_menu_action" action="estate_model_action"/>
+    <data>
+        <menuitem id="test_menu_root" name="KuchenEstate">
+            <menuitem id="properties_menu_first-level" name="Properties">
+                <menuitem id="estate_model_menu_action" action="estate_model_action"/>
+            </menuitem>
+            <menuitem id="settings_menu_first-level" name="Settings">
+                <menuitem id="property_type_menu_action" action="property_type_model_action"/>
+                <menuitem id="property_tags_menu_action" action="property_tags_model_action"/>
+            </menuitem>
         </menuitem>
-    </menuitem>
+    </data>
 </odoo>

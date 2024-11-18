@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<odoo>
+<data>
+    <record id="property_tags_model_action" model="ir.actions.act_window">
+        <field name="name">Property Tags</field>
+        <field name="res_model">property.tags</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="property_tags_view_tree" model="ir.ui.view">
+        <field name="name">tree</field>
+        <field name="model">property.tags</field>
+        <field name="arch" type="xml">
+            <tree string="Properties">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="property_tags_view_form" model="ir.ui.view">
+        <field name="name">form</field>
+        <field name="model">property.tags</field>
+        <field name="arch" type="xml">
+            <form string="Create">
+                <sheet>
+                    <group>
+                        <group>
+                            <label for="name"/>
+                            <h5>
+                                <field name="name"/>
+                            </h5>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</data>
+</odoo>
