@@ -20,10 +20,11 @@ class Kuchen(models.Model):
     description = fields.Text()
     postcode = fields.Char()
     bedrooms = fields.Integer(default=2)
-    living_area = fields.Float()
+    living_area = fields.Float(string="Living Area (sqm)")
+    garden_area = fields.Float(string="Garden Area (sqm)")
     
     garden_orientation = fields.Selection(
-        string='Type',
+        string='Orientation',
         selection=[('north', 'North'), ('east', 'East'), ('south', 'South'), ('west', 'West')])
     
     state = fields.Selection(
@@ -46,3 +47,6 @@ class Kuchen(models.Model):
 
     buyer_id = fields.Many2one('res.partner', string='Buyer', copy=False)
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)
+
+    offer_ids = fields.One2many('property.offer', 'property_id', string='Offers')
+
