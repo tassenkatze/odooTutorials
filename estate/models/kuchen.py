@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 from dateutil.relativedelta import relativedelta
 
 class Kuchen(models.Model):
@@ -22,6 +22,7 @@ class Kuchen(models.Model):
     bedrooms = fields.Integer(default=2)
     living_area = fields.Float(string="Living Area (sqm)")
     garden_area = fields.Float(string="Garden Area (sqm)")
+    total_area = fields.Float(compute="_compute_total", string="Total Area (sqm)")
     
     garden_orientation = fields.Selection(
         string='Orientation',
@@ -50,3 +51,19 @@ class Kuchen(models.Model):
 
     offer_ids = fields.One2many('property.offer', 'property_id', string='Offers')
 
+    best_price = fields.Float(compute="_compute_best_price")
+
+    @api.depends("living_area", "garden_area")
+    def _compute_total(self):
+        for record in self:
+            record.total_area = record.living_area + record.garden_area
+
+    @api.depends("offer_ids.price")
+    def _compute_best_price(self):
+        for record in self:
+            #record.best_price = max(record.offer_ids.mapped('price'))
+            offer_prices = record.offer_ids.mapped('price')
+            if any(offer_prices):
+                record.best_price = max(offer_prices)
+            else:
+                record.best_price = 0
