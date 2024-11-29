@@ -76,10 +76,13 @@
                                 <field name="living_area"/>
                             </group>
                             <group>
-                                <field name="garden_area"/>
+                                <field name="total_area"/>
                             </group>
                             <group>
-                                <field name="total_area"/>
+                                <field name="garden"/>
+                            </group>
+                            <group>
+                                <field name="garden_area"/>
                             </group>
                             <group>
                                 <field name="garden_orientation"/>

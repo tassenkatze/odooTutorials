@@ -1,4 +1,5 @@
-from odoo import fields, models
+from odoo import fields, models, api
+from datetime import timedelta
 
 class PropertyType(models.Model):
     _name = "property.type"
@@ -26,3 +27,11 @@ class PropertyOffer(models.Model):
     )
     partner_id = fields.Many2one('res.partner', string='Partner', required=True)
     property_id = fields.Many2one('kuchen', string='Property', required=True)
+
+    validity = fields.Integer(default = 7)
+    date_deadline = fields.Datetime(compute="_compute_date_deadline")
+
+    @api.depends('create_date', 'validity')
+    def _compute_date_deadline(self):
+        for record in self:
+            record.date_deadline = (record.create_date or fields.Datetime.now()) + timedelta(days=record.validity)

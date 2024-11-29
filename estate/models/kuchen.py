@@ -21,12 +21,22 @@ class Kuchen(models.Model):
     postcode = fields.Char()
     bedrooms = fields.Integer(default=2)
     living_area = fields.Float(string="Living Area (sqm)")
-    garden_area = fields.Float(string="Garden Area (sqm)")
     total_area = fields.Float(compute="_compute_total", string="Total Area (sqm)")
     
+    garden = fields.Boolean(defaault=False)
+    garden_area = fields.Float(string="Garden Area (sqm)")
     garden_orientation = fields.Selection(
         string='Orientation',
         selection=[('north', 'North'), ('east', 'East'), ('south', 'South'), ('west', 'West')])
+    
+    @api.onchange("garden")
+    def _onchange_garden(self):
+        if self.garden:
+            self.garden_area = 10
+            self.garden_orientation = 'north'
+        else:
+            self.garden_area = 0
+            self.garden_orientation = False
     
     state = fields.Selection(
         selection=[
@@ -61,7 +71,6 @@ class Kuchen(models.Model):
     @api.depends("offer_ids.price")
     def _compute_best_price(self):
         for record in self:
-            #record.best_price = max(record.offer_ids.mapped('price'))
             offer_prices = record.offer_ids.mapped('price')
             if any(offer_prices):
                 record.best_price = max(offer_prices)
