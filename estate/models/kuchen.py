@@ -23,7 +23,7 @@ class Kuchen(models.Model):
     living_area = fields.Float(string="Living Area (sqm)")
     total_area = fields.Float(compute="_compute_total", string="Total Area (sqm)")
     
-    garden = fields.Boolean(defaault=False)
+    garden = fields.Boolean(default=False)
     garden_area = fields.Float(string="Garden Area (sqm)")
     garden_orientation = fields.Selection(
         string='Orientation',
